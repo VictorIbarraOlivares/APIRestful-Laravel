@@ -22,7 +22,7 @@ class Product extends Model
         'quantity',
         'status',
         'image',
-        'selled_id'
+        'seller_id'
     ];
 
     protected $hidden = [
