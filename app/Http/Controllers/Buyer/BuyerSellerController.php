@@ -22,9 +22,7 @@ class BuyerSellerController extends ApiController
                          ->unique('id')
                          ->values(); // reorganiza los indices, elimina los espacios vacios
 
-
         return $this->showAll($sellers);
-        
     }
 
 }
