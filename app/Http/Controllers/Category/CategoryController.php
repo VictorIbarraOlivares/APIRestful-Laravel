@@ -60,7 +60,19 @@ class CategoryController extends ApiController
      */
     public function update(Request $request, Category $category)
     {
-        //
+        // para actualizar la instancia de category, recibe los valores que se van a actualizar
+        $category->fill( $request->only([
+            'name',
+            'description'
+        ]));
+
+        // Verificar si la instancia a cambiado
+        if ( $category->isClean() ) {
+            return $this->errorResponse('Debe especificar al menos un valor diferente para actualizar', 422);
+        }
+
+        $category->save();
+        return $this->showOne($category);
     }
 
     /**
