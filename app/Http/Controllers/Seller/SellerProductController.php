@@ -8,7 +8,9 @@ use App\User;
 use App\Seller;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+
 
 class SellerProductController extends ApiController
 {
@@ -107,6 +109,7 @@ class SellerProductController extends ApiController
     {
         $this->verificarVendedor($seller, $product);
         
+        Storage::delete($product->image);
         $product->delete();
 
         return $this->showOne($product);
