@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\ApiController;
 use App\Product;
+use App\Category;
 use Illuminate\Http\Request;
 
 class ProductCategoryController extends ApiController
@@ -26,9 +27,20 @@ class ProductCategoryController extends ApiController
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Product $product, Category $category)
     {
-        //
+        /**
+         * Metodos que se pueden ocupar
+         * sync: Elimina lo anterior, solo deja la nueva relacion
+         * attach: Añade nueva relacion, pero las puede duplicar
+         * syncWithoutDetaching: Añade la relacion, no las repite
+         */
+        
+        // $product->categories()->sync([$category->id]);
+        // $product->categories()->attach([$category->id]);
+        $product->categories()->syncWithoutDetaching([$category->id]);
+
+        return $this->showAll($product->categories);
     }
 
     /**
