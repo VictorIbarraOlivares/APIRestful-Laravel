@@ -83,7 +83,7 @@ class SellerProductController extends ApiController
         if ( $request->has('status') ) {
 
             $product->status = $request->status;
-            if ( $product->estaDiponible() && $product->categories->count() == 0 ) {
+            if ( $product->estaDisponible() && $product->categories->count() == 0 ) {
                 return $this->errorResponse('Un producto debe tener al menos una categoría', 409);
             }
 

@@ -35,7 +35,7 @@ class ProductBuyerTransactionController extends ApiController
             return $this->errorResponse('El vendedor debe ser un usuario verificado', 409);
         }
 
-        if ( ! $product->estaDiponible() ) {
+        if ( ! $product->estaDisponible() ) {
             return $this->errorResponse('El producto para esta transacción no está disponible', 409);
         }
 
@@ -45,6 +45,12 @@ class ProductBuyerTransactionController extends ApiController
             );
         }
 
+        /**
+         * Sirve por si la creación de la transaction falla.
+         * Al estar dentro de esa función.
+         * Es para el caso que se esten procesando transaciones al mismo tiempo
+         * y la cantidad del producto llegue a menos de 0
+         */
         return DB::transaction(function () use ($request, $product, $buyer) {
             $product->quantity -= $request->quantity;
             $product->save();

@@ -29,7 +29,7 @@ class Product extends Model
         'pivot'
     ];
 
-    public function estaDiponible()
+    public function estaDisponible()
     {
         return $this->status == Product::PRODUCTO_DISPONIBLE;
     }
