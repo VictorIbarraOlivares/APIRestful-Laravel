@@ -33,17 +33,25 @@ class AppServiceProvider extends ServiceProvider
          * Al momento de crear un usuario se ejecuta esta funcion
          */
         User::created( function($user) {
-            Mail::to($user->email)->send(new UserCreated($user));
+            /**
+             * Sirve para que se vuelva a enviar el correo en caso de fallo
+             * tiene un limite de 5 intentos y se ejecuta cada 100 mls
+             */
+            retry(5, function() use( $user ) {
+                Mail::to($user->email)->send(new UserCreated($user));    
+            }, 100);
         });
 
         /**
          * Al momento de actualizar el correo del usuario
          */
         User::updated( function($user) {
-            // verifica si se modifico el email
-            if ( $user->isDirty('email') ) {
-                Mail::to($user->email)->send(new UserMailChanged($user));
-            }
+            retry(5, function() use( $user ) {
+                // verifica si se modifico el email
+                if ( $user->isDirty('email') ) {
+                    Mail::to($user->email)->send(new UserMailChanged($user));
+                }
+            }, 100);
         });
 
         /**
