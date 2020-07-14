@@ -3,6 +3,7 @@
 use App\User;
 use App\Product;
 use App\Mail\UserCreated;
+use App\Mail\UserMailChanged;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -33,6 +34,16 @@ class AppServiceProvider extends ServiceProvider
          */
         User::created( function($user) {
             Mail::to($user->email)->send(new UserCreated($user));
+        });
+
+        /**
+         * Al momento de actualizar el correo del usuario
+         */
+        User::updated( function($user) {
+            // verifica si se modifico el email
+            if ( $user->isDirty('email') ) {
+                Mail::to($user->email)->send(new UserMailChanged($user));
+            }
         });
 
         /**
