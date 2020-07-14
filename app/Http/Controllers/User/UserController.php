@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\User;
 
 use App\User;
-use App\Http\Controllers\ApiController;
+use App\Mail\UserCreated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\ApiController;
+
 
 class UserController extends ApiController
 {
@@ -135,5 +138,16 @@ class UserController extends ApiController
         $user->save();
 
         return $this->showMessage('La cuenta ha sido verificada');
+    }
+
+    public function resend(User $user)
+    {
+        if ( $user->esVerificado() ) {
+            return $this->errorResponse('Este usuario ya ha sido verificado', 409);
+        }
+
+        Mail::to($user->email)->send( new UserCreated($user) );
+
+        return $this->showMessage('El correo de verficación se ha reenviado');
     }
 }
