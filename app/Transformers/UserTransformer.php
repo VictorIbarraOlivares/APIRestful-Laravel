@@ -34,7 +34,7 @@ class UserTransformer extends TransformerAbstract
     {
         return [
             'identificador' => (int)$user->id,
-            'nnombre' => (string)$user->name,
+            'nombre' => (string)$user->name,
             'correo' => (string)$user->verified,
             'esVerificado' =>  (int)$user->verfied,
             'esAdministrador' => ($user->admin === 'true'), // esto es por como viene en el dato de la bd

@@ -34,7 +34,7 @@ class BuyerTransformer extends TransformerAbstract
     {
         return [
             'identificador' => (int)$buyer->id,
-            'nnombre' => (string)$buyer->name,
+            'nombre' => (string)$buyer->name,
             'correo' => (string)$buyer->verified,
             'esVerificado' =>  (int)$buyer->verfied,
             'fechaCreacion' => (string)$buyer->created_at,
