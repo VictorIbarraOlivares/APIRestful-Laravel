@@ -19,16 +19,32 @@ trait ApiResponser
 
     protected function showAll(Collection $collection, $code = 200)
     {
-        return response()->json(['data' => $collection], $code);
+        if ( $collection->isEmpty() ) {
+            return $this->successResponse(['data' => $collection], $code);
+        }
+
+        $transformer = $collection->first()->transformer; // se obtiene el transformador
+        $collection = $this->transformData($collection, $transformer);
+
+        return $this->successResponse($collection, $code);
     }
 
     protected function showOne(Model $instance, $code = 200)
     {
-        return response()->json(['data' => $instance], $code);
+        $transformer = $instance->transformer; // se obtiene el transformador
+        $instance = $this->transformData($instance, $transformer);
+        return $this->successResponse($instance, $code);
     }
 
     protected function showMessage($message, $code = 200)
     {
-        return response()->json(['data' => $message], $code);
+        return $this->successResponse($message, $code);
+    }
+
+    protected function transformData($data, $transformer)
+    {
+        $transformation = fractal($data, new $transformer);
+
+        return $transformation->toArray();
     }
 }
