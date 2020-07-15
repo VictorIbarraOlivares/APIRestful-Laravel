@@ -35,7 +35,7 @@ class UserTransformer extends TransformerAbstract
         return [
             'identificador' => (int)$user->id,
             'nombre' => (string)$user->name,
-            'correo' => (string)$user->verified,
+            'correo' => (string)$user->email,
             'esVerificado' =>  (int)$user->verfied,
             'esAdministrador' => ($user->admin === 'true'), // esto es por como viene en el dato de la bd
             'fechaCreacion' => (string)$user->created_at,
