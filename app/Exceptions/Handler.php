@@ -12,6 +12,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Database\QueryException;
+use Illuminate\Session\TokenMismatchException;
 
 use Throwable;
 
@@ -101,12 +102,15 @@ class Handler extends ExceptionHandler
             
         }
 
+        if ( $exception instanceof TokenMismatchException ) {
+            return redirect()->back()->with($request->input());
+        }
+
         if ( config('app.debug') ) {
             return parent::render($request, $exception);
-        } else {
-            return $this->errorResponse('Falla inesperada. Intente luego', 500);
         }
-        
+
+        return $this->errorResponse('Falla inesperada. Intente luego', 500);
     }
 
     /**
