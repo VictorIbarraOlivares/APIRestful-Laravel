@@ -3,15 +3,16 @@
 namespace App;
 
 use Illuminate\Support\Str;
+use Laravel\Passport\HasApiTokens;
+use App\Transformers\UserTransformer;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Notifications\Notifiable;
-use App\Transformers\UserTransformer;
 
 class User extends Authenticatable
 {
-    use Notifiable, SoftDeletes;
+    use HasApiTokens, Notifiable, SoftDeletes;
 
     const USUARIO_VERIFICADO = '1';
     const USUARIO_NO_VERIFICADO = '0';

@@ -67,3 +67,6 @@ Route::resource('sellers.products', 'Seller\SellerProductController', ['except' 
 Route::resource('users', 'User\UserController', ['except' =>['create', 'edit']]);
 Route::name('verify')->get('users/verify/{token}', 'User\UserController@verify');
 Route::name('resend')->get('users/{user}/resend', 'User\UserController@resend');
+
+
+Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken'); // para que el middleware sea api, en el route:list
