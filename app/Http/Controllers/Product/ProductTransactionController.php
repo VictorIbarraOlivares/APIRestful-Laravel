@@ -8,6 +8,13 @@ use Illuminate\Http\Request;
 
 class ProductTransactionController extends ApiController
 {
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->middleware('transform.input:'. TransactionTransformer::class)->only(['store']);
+    }
+    
     /**
      * Display a listing of the resource.
      *
