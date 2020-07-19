@@ -31,5 +31,16 @@ class AuthServiceProvider extends ServiceProvider
         Passport::tokensExpireIn( Carbon::now()->addMinutes(30) ); // tiempo que dura el token, es de 30 minutos
         Passport::refreshTokensExpireIn( Carbon::now()->addDays(30) ); // tiempo limite para refrescar el token, es de 30 días
         Passport::enableImplicitGrant(); // para obtener tokens de esta manera
+
+        Passport::tokensCan([
+            'purchase-product' => 'Crear transacciones para comprar productos determinados',
+            'manage-products'  => 'Crear, ver, actualizar y eliminar productos',
+            'manage-account'   => 'Obtener la información de la cuenta, nombre, email, estado 
+                                   (sin contraseña), modificar datos como email, nombre y contraseña. 
+                                   No puede eliminar la cuenta',
+            'read-general'     => 'Obtener información general, categorías donde se compra y se vende,
+                                   prodcutos vendidos o comprados, transacciones, compras y ventas',
+
+        ]);
     }
 }
