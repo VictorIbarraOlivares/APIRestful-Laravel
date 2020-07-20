@@ -10,6 +10,7 @@ use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Transformers\ProductTransformer;
+use Illuminate\Auth\AuthenticationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 
@@ -30,8 +31,12 @@ class SellerProductController extends ApiController
      */
     public function index(Seller $seller)
     {
-        $products = $seller->products;
-        return $this->showAll($products);
+        if ( request()->user()->tokenCan('read-general') || request()->user()->tokenCan('manage-products') ) {
+            $products = $seller->products;
+            return $this->showAll($products);
+        }
+
+        throw new AuthenticationException;
     }
 
     /**
