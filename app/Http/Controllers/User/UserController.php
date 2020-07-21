@@ -85,9 +85,8 @@ class UserController extends ApiController
      */
     public function update(Request $request, User $user)
     {
-        $this->allowedAdminAction();
         // $user = User::findOrFail($id);
-        
+
         $reglas = [
             'email' => 'email|unique:users,email,' .$user->id,
             'password' => 'min:6|confirmed',
@@ -111,6 +110,8 @@ class UserController extends ApiController
         }
 
         if ( $request->has('admin') ) {
+            $this->allowedAdminAction(); // para que solos los usuarios administradores puedan editar el valor de administrador en los usuarios
+
             if ( ! $user->esVerificado() ) {
                 return $this->errorResponse('Unicamente los usuarios verificados pueden cambiar su valor de administrador', 409);
             }

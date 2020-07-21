@@ -14,6 +14,8 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Database\QueryException;
 use Illuminate\Session\TokenMismatchException;
 
+use Fruitcake\Cors\CorsServiceProvider;
+
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -111,6 +113,7 @@ class Handler extends ExceptionHandler
         }
 
         return $this->errorResponse('Falla inesperada. Intente luego', 500);
+        
     }
 
     /**

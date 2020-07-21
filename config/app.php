@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Fruitcake\Cors\CorsServiceProvider::class,
         Spatie\Fractal\FractalServiceProvider::class,
 
         /*
