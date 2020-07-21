@@ -22,6 +22,7 @@ class SellerController extends ApiController
      */
     public function index()
     {
+        $this->allowedAdminAction();
         $vendedores = Seller::has('products')->get();
 
         // return response()->json(['data' => $vendedores], 200);

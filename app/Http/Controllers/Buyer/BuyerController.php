@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Buyer;
 
-use App\Buyer;
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
+use App\Buyer;
 
 class BuyerController extends ApiController
 {
@@ -22,9 +22,8 @@ class BuyerController extends ApiController
      */
     public function index()
     {
+        $this->allowedAdminAction();
         $compradores = Buyer::has('transactions')->get();
-
-        // return response()->json(['data' => $compradores], 200);
         return $this->showAll($compradores);
     }
 

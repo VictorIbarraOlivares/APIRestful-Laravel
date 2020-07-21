@@ -43,6 +43,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        Gate::define('admin-action', function ($user) {
+            return $user->esAdministrador();
+        });
+
         Passport::routes();
         Passport::tokensExpireIn( Carbon::now()->addMinutes(30) ); // tiempo que dura el token, es de 30 minutos
         Passport::refreshTokensExpireIn( Carbon::now()->addDays(30) ); // tiempo limite para refrescar el token, es de 30 días

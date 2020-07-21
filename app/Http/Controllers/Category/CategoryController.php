@@ -36,6 +36,7 @@ class CategoryController extends ApiController
      */
     public function store(Request $request)
     {
+        $this->allowedAdminAction();
         $reglas = [
             'name' => 'required',
             'description' => 'required'
@@ -68,6 +69,7 @@ class CategoryController extends ApiController
      */
     public function update(Request $request, Category $category)
     {
+        $this->allowedAdminAction();
         // para actualizar la instancia de category, recibe los valores que se van a actualizar
         $category->fill( $request->only([
             'name',
@@ -91,6 +93,7 @@ class CategoryController extends ApiController
      */
     public function destroy(Category $category)
     {
+        $this->allowedAdminAction();
         $category->delete();
 
         return $this->showOne($category);

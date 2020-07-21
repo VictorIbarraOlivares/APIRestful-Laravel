@@ -30,6 +30,7 @@ class UserController extends ApiController
      */
     public function index()
     {
+        $this->allowedAdminAction();
         $usuarios = User::all();
         return $this->showAll($usuarios);
     }
@@ -84,8 +85,9 @@ class UserController extends ApiController
      */
     public function update(Request $request, User $user)
     {
+        $this->allowedAdminAction();
         // $user = User::findOrFail($id);
-
+        
         $reglas = [
             'email' => 'email|unique:users,email,' .$user->id,
             'password' => 'min:6|confirmed',
